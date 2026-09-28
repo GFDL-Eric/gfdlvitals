@@ -72,7 +72,7 @@ def tables_and_years(dbfile):
     """
     Function to get list of variables and years in a .db file
     """
-    conn = sqlite3.connect(dbfile)
+    conn = sqlite3.connect("file:dbfile?mode=ro&immutable=1", uri=True)
     cur = conn.cursor()
     sql = "SELECT name FROM sqlite_master WHERE type='table'"
     _ = cur.execute(sql)
@@ -83,7 +83,7 @@ def tables_and_years(dbfile):
     years = []
     for table in tables:
         if table not in ["long_name", "units", "cell_measure"]:
-            conn = sqlite3.connect(dbfile)
+            conn = sqlite3.connect("file:dbfile?mode=ro&immutable=1", uri=True)
             cur = conn.cursor()
             sql = "SELECT year FROM " + table
             try:
@@ -130,7 +130,7 @@ def write_nc(
             extract_list = ["value"]
             for k in extract_list:
                 count = 0
-                conn = sqlite3.connect(dbfile)
+                conn = sqlite3.connect("file:dbfile?mode=ro&immutable=1", uri=True)
                 cur = conn.cursor()
 
                 cur.execute(f"SELECT value from long_name where var='{table}'")
