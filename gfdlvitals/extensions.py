@@ -489,7 +489,7 @@ class Timeseries:
     ):
 
         # open the sqlite connection
-        con = sqlite3.connect("file:f?mode=ro&immutable=1", uri=True)
+        con = sqlite3.connect(f"file:{f}?mode=ro&immutable=1", uri=True)
         cur = con.cursor()
 
         # get the results from the sqlite file for the requested variable
@@ -599,7 +599,7 @@ def open_db(
     """Function to read sqlite dbfile"""
 
     if variables is None:
-        conn = sqlite3.connect("file:dbfile?mode=ro&immutable=1", uri=True)
+        conn = sqlite3.connect(f"file:{dbfile}?mode=ro&immutable=1", uri=True)
         cur = conn.cursor()
         sql = "SELECT name FROM sqlite_master WHERE type='table'"
         _ = cur.execute(sql)
